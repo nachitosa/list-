@@ -1,0 +1,613 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.app { font-family: var(--font-sans); max-width: 380px; margin: 0 auto; padding-bottom: 1.5rem; }
+.screen { display: none; } .screen.active { display: block; }
+
+.top-bar { padding: 0.9rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; gap: 8px; }
+.top-bar-title { flex: 1; font-size: 17px; font-weight: 500; color: var(--color-text-primary); }
+.top-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 1px; }
+.btn-primary { background: #185FA5; color: white; border: none; border-radius: var(--border-radius-md); padding: 7px 13px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.btn-icon { background: none; border: none; cursor: pointer; color: var(--color-text-secondary); font-size: 20px; display: flex; padding: 4px; }
+.btn-icon.danger { color: #A32D2D; }
+.search-wrap { padding: 0.75rem 1rem; }
+.search-input { width: 100%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 12px; font-size: 14px; color: var(--color-text-primary); }
+.search-input::placeholder { color: var(--color-text-tertiary); }
+.lists-grid { padding: 0 1rem; display: flex; flex-direction: column; gap: 10px; }
+.list-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 0.9rem 1rem; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: border-color 0.15s; }
+.list-card:hover { border-color: var(--color-border-secondary); }
+.list-emoji { width: 40px; height: 40px; border-radius: var(--border-radius-md); background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.list-info { flex: 1; min-width: 0; }
+.list-name { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+.list-meta { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+
+/* Detail */
+.detail-subbar { border-bottom: 0.5px solid var(--color-border-tertiary); }
+.detail-subbar-row { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; }
+.btn-subbar { display: flex; align-items: center; gap: 5px; background: none; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 5px 10px; font-size: 12px; color: var(--color-text-secondary); cursor: pointer; transition: background 0.1s; }
+.btn-subbar:hover { background: var(--color-background-secondary); }
+.btn-subbar.active { background: #E6F1FB; border-color: #B5D4F4; color: #0C447C; }
+.active-filter-pills { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 1rem 0.6rem; }
+.filter-pill { display: flex; align-items: center; gap: 4px; background: #E6F1FB; border: 0.5px solid #B5D4F4; border-radius: 20px; padding: 3px 10px; font-size: 12px; color: #0C447C; }
+.filter-pill button { background: none; border: none; cursor: pointer; color: #185FA5; font-size: 14px; display: flex; padding: 0; margin-left: 2px; }
+
+/* Filtros panel */
+.filters-panel { border-bottom: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); padding: 0.75rem 1rem; display: none; }
+.filters-panel.open { display: block; }
+.filter-group { margin-bottom: 12px; }
+.filter-group:last-child { margin-bottom: 0; }
+.filter-group-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+.filter-opts { display: flex; flex-wrap: wrap; gap: 5px; }
+.filter-opt { padding: 4px 12px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); font-size: 12px; color: var(--color-text-secondary); cursor: pointer; background: var(--color-background-primary); transition: all 0.1s; }
+.filter-opt.sel { background: #185FA5; color: white; border-color: #185FA5; }
+.filter-clear { font-size: 12px; color: #185FA5; background: none; border: none; cursor: pointer; margin-top: 8px; }
+
+/* Progress */
+.progress-wrap { padding: 0.5rem 1rem 0.3rem; }
+.progress-bar { height: 4px; background: var(--color-background-secondary); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 4px; background: #1D9E75; border-radius: 4px; transition: width 0.3s; }
+.progress-label { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; }
+
+/* Sections */
+.sections-wrap { padding: 0.5rem 1rem; }
+.section-block { margin-bottom: 0.75rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+.section-hdr { display: flex; align-items: center; gap: 8px; padding: 0.55rem 0.8rem; background: var(--color-background-secondary); cursor: pointer; user-select: none; }
+.sec-toggle { font-size: 13px; color: var(--color-text-secondary); transition: transform 0.2s; }
+.sec-toggle.open { transform: rotate(90deg); }
+.sec-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.sec-count { font-size: 12px; color: var(--color-text-secondary); }
+.btn-sm { background: none; border: none; cursor: pointer; color: var(--color-text-tertiary); font-size: 15px; display: flex; padding: 3px; opacity: 0.5; }
+.btn-sm:hover { opacity: 1; color: #A32D2D; }
+.sec-items { display: none; }
+.sec-items.open { display: block; }
+.item-row { display: flex; align-items: center; gap: 10px; padding: 9px 0.8rem; border-bottom: 0.5px solid var(--color-border-tertiary); cursor: pointer; transition: background 0.1s; }
+.item-row:last-of-type { border-bottom: none; }
+.item-row:hover { background: var(--color-background-secondary); }
+.item-check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--color-border-secondary); background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+.item-check.done { background: #1D9E75; border-color: #1D9E75; }
+.item-check i { font-size: 13px; color: transparent; }
+.item-check.done i { color: white; }
+.item-body { flex: 1; min-width: 0; }
+.item-title { font-size: 14px; color: var(--color-text-primary); }
+.item-title.done { color: var(--color-text-tertiary); text-decoration: line-through; }
+.item-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.chip { font-size: 11px; padding: 2px 8px; border-radius: 20px; border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); background: var(--color-background-secondary); }
+.chip.status-todo { background: #E6F1FB; color: #0C447C; border-color: #B5D4F4; }
+.chip.status-doing { background: #FAEEDA; color: #633806; border-color: #FAC775; }
+.chip.status-done { background: #EAF3DE; color: #27500A; border-color: #C0DD97; }
+.add-item-row { display: flex; gap: 6px; padding: 6px 0.8rem 8px; }
+.add-item-input { flex: 1; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 6px 10px; font-size: 13px; color: var(--color-text-primary); }
+.add-item-input::placeholder { color: var(--color-text-tertiary); }
+.btn-add-sm { background: #185FA5; color: white; border: none; border-radius: var(--border-radius-md); padding: 6px 12px; font-size: 13px; cursor: pointer; }
+.btn-add-section { display: flex; align-items: center; gap: 6px; margin: 0 1rem 0.75rem; background: none; border: 0.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 8px 14px; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; width: calc(100% - 2rem); }
+.btn-add-section:hover { background: var(--color-background-secondary); }
+.empty-filter { text-align: center; padding: 1.5rem; font-size: 13px; color: var(--color-text-secondary); }
+
+/* Item detail */
+.item-detail-header { padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; gap: 8px; }
+.item-name-input { flex: 1; font-size: 16px; font-weight: 500; color: var(--color-text-primary); background: none; border: none; padding: 0; border-bottom: 1.5px solid transparent; }
+.item-name-input:focus { outline: none; border-bottom-color: #185FA5; }
+.fields-section { padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.fields-section-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+.btn-edit-fields { font-size: 12px; color: #185FA5; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+.field-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.field-row:last-child { border-bottom: none; }
+.field-label { font-size: 13px; color: var(--color-text-secondary); width: 95px; flex-shrink: 0; display: flex; align-items: center; gap: 5px; }
+.field-label i { font-size: 15px; }
+.field-value { flex: 1; }
+.field-input { width: 100%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 5px 10px; font-size: 13px; color: var(--color-text-primary); }
+.field-input:focus { outline: none; border-color: #185FA5; }
+.status-sel { width: 100%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 5px 10px; font-size: 13px; color: var(--color-text-primary); }
+.stars { display: flex; gap: 4px; }
+.star { font-size: 20px; cursor: pointer; color: var(--color-border-secondary); }
+.star.active { color: #BA7517; }
+.desc-section { padding: 0.75rem 1rem; }
+.desc-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; }
+.desc-textarea { width: 100%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 10px; font-size: 13px; color: var(--color-text-primary); resize: none; min-height: 80px; font-family: var(--font-sans); }
+.desc-textarea:focus { outline: none; border-color: #185FA5; }
+
+/* Modales */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; align-items: flex-end; justify-content: center; z-index: 100; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--color-background-primary); border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; border-top: 0.5px solid var(--color-border-tertiary); padding: 1.25rem; width: 100%; max-width: 380px; max-height: 88vh; overflow-y: auto; }
+.modal h3 { font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--color-text-primary); }
+.modal-input { width: 100%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 12px; font-size: 14px; color: var(--color-text-primary); margin-bottom: 10px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+.btn-cancel { background: none; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 7px 16px; font-size: 14px; cursor: pointer; color: var(--color-text-secondary); }
+.btn-confirm { background: #185FA5; color: white; border: none; border-radius: var(--border-radius-md); padding: 7px 16px; font-size: 14px; cursor: pointer; }
+.emoji-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.emoji-opt { font-size: 22px; padding: 4px 6px; border-radius: 6px; border: 1.5px solid transparent; cursor: pointer; }
+.emoji-opt.selected { border-color: #185FA5; background: #E6F1FB; }
+.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 12px 0; }
+.field-type-label { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+.field-types-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 4px; }
+.field-type-opt { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); cursor: pointer; font-size: 13px; color: var(--color-text-secondary); transition: all 0.12s; }
+.field-type-opt i { font-size: 17px; }
+.field-type-opt.selected { border-color: #185FA5; background: #E6F1FB; color: #0C447C; }
+.field-type-opt:hover:not(.selected) { background: var(--color-background-secondary); }
+
+/* Manage fields in modal */
+.mf-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.mf-row:last-child { border-bottom: none; }
+.mf-icon { font-size: 18px; color: var(--color-text-secondary); width: 24px; text-align: center; }
+.mf-label { flex: 1; font-size: 14px; color: var(--color-text-primary); }
+.toggle-wrap { position: relative; width: 36px; height: 20px; }
+.toggle-input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-track { position: absolute; inset: 0; background: var(--color-border-secondary); border-radius: 20px; cursor: pointer; transition: background 0.2s; }
+.toggle-input:checked + .toggle-track { background: #185FA5; }
+.toggle-thumb { position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; background: white; border-radius: 50%; transition: left 0.2s; pointer-events: none; }
+.toggle-input:checked ~ .toggle-thumb { left: 19px; }
+</style>
+
+<h2 class="sr-only">App de listas con filtros y edición de campos</h2>
+<div class="app">
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="top-bar">
+      <div style="flex:1"><div class="top-bar-title">Mis listas</div><div class="top-sub" id="home-sub"></div></div>
+      <button class="btn-primary" onclick="openNewListModal()"><i class="ti ti-plus" aria-hidden="true"></i> Nueva lista</button>
+    </div>
+    <div class="search-wrap"><input class="search-input" type="text" placeholder="Buscar lista..." oninput="renderHome(this.value)" /></div>
+    <div class="lists-grid" id="lists-grid"></div>
+  </div>
+
+  <!-- DETALLE LISTA -->
+  <div class="screen" id="screen-detail">
+    <div class="top-bar">
+      <button class="btn-icon" onclick="goHome()"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+      <div style="flex:1"><div class="top-bar-title" id="detail-title"></div></div>
+      <button class="btn-icon" onclick="openManageFields()" title="Editar campos"><i class="ti ti-layout-columns" aria-hidden="true"></i></button>
+      <button class="btn-icon" onclick="openShare()"><i class="ti ti-share" aria-hidden="true"></i></button>
+      <button class="btn-icon danger" onclick="deleteList()"><i class="ti ti-trash" aria-hidden="true"></i></button>
+    </div>
+
+    <!-- Barra de filtros -->
+    <div class="detail-subbar">
+      <div class="detail-subbar-row">
+        <button class="btn-subbar" id="btn-filters" onclick="toggleFilters()"><i class="ti ti-filter" aria-hidden="true" style="font-size:14px"></i> Filtrar <i class="ti ti-chevron-down" aria-hidden="true" style="font-size:12px" id="filter-chev"></i></button>
+        <button class="btn-subbar" id="btn-show-done" onclick="toggleShowDone()"><i class="ti ti-eye" aria-hidden="true" style="font-size:14px"></i> <span id="show-done-label">Ocultar completados</span></button>
+      </div>
+      <div id="active-pills" class="active-filter-pills"></div>
+    </div>
+
+    <!-- Panel de filtros desplegable -->
+    <div class="filters-panel" id="filters-panel"></div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="progress-label" id="prog-label"></div>
+    </div>
+    <div class="sections-wrap" id="sections-wrap"></div>
+    <button class="btn-add-section" onclick="openNewSectionModal()"><i class="ti ti-plus" aria-hidden="true"></i> Agregar sección</button>
+  </div>
+
+  <!-- DETALLE ÍTEM -->
+  <div class="screen" id="screen-item">
+    <div class="item-detail-header">
+      <button class="btn-icon" onclick="closeItem()"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+      <input class="item-name-input" type="text" id="item-name-inp" placeholder="Nombre del ítem" onchange="saveItemName()" />
+      <button class="btn-icon danger" onclick="deleteCurrentItem()"><i class="ti ti-trash" aria-hidden="true"></i></button>
+    </div>
+    <div class="fields-section">
+      <div class="fields-section-label">
+        <span>Campos</span>
+        <button class="btn-edit-fields" onclick="openManageFields()"><i class="ti ti-pencil" aria-hidden="true" style="font-size:13px"></i> Editar campos</button>
+      </div>
+      <div id="item-fields"></div>
+    </div>
+    <div class="desc-section">
+      <div class="desc-label"><i class="ti ti-align-left" aria-hidden="true" style="font-size:14px;margin-right:4px;"></i> Descripción</div>
+      <textarea class="desc-textarea" id="item-desc" placeholder="Agregá notas, detalles o contexto..." onchange="saveDesc()"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: nueva lista -->
+<div class="modal-overlay" id="modal-list" onclick="if(event.target===this)closeModal('modal-list')">
+  <div class="modal">
+    <h3>Nueva lista</h3>
+    <input class="modal-input" type="text" id="nl-name" placeholder="Nombre de la lista..." />
+    <div class="emoji-row" id="nl-emojis"></div>
+    <div class="divider"></div>
+    <div class="field-type-label">Campos de cada ítem</div>
+    <div class="field-types-grid" id="field-types-grid"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-list')">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmNewList()">Crear lista</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: gestionar campos -->
+<div class="modal-overlay" id="modal-fields" onclick="if(event.target===this)closeModal('modal-fields')">
+  <div class="modal">
+    <h3>Campos de la lista</h3>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:12px;">Activá o desactivá los campos disponibles para los ítems de esta lista.</p>
+    <div id="manage-fields-list"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-fields')">Cerrar</button>
+      <button class="btn-confirm" onclick="applyFieldChanges()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: nueva sección -->
+<div class="modal-overlay" id="modal-sec" onclick="if(event.target===this)closeModal('modal-sec')">
+  <div class="modal">
+    <h3>Nueva sección</h3>
+    <input class="modal-input" type="text" id="ns-name" placeholder="Nombre de la sección..." onkeydown="if(event.key==='Enter')confirmNewSection()" />
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-sec')">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmNewSection()">Agregar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: compartir -->
+<div class="modal-overlay" id="modal-share" onclick="if(event.target===this)closeModal('modal-share')">
+  <div class="modal">
+    <h3>Compartir lista</h3>
+    <p id="share-name" style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;"></p>
+    <div style="display:flex;gap:6px;margin-bottom:8px;">
+      <input style="flex:1;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:7px 10px;font-size:12px;color:var(--color-text-secondary);" type="text" id="share-link" readonly />
+      <button class="btn-confirm" style="font-size:13px;white-space:nowrap;" onclick="copyShareLink()">Copiar</button>
+    </div>
+    <div id="copied-msg" style="display:none;font-size:12px;color:#1D9E75;margin-bottom:8px;"><i class="ti ti-check" aria-hidden="true"></i> ¡Copiado!</div>
+    <div style="display:flex;gap:8px;">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;font-size:11px;color:var(--color-text-secondary);"><i class="ti ti-brand-whatsapp" aria-hidden="true" style="font-size:22px"></i>WhatsApp</div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;font-size:11px;color:var(--color-text-secondary);"><i class="ti ti-brand-telegram" aria-hidden="true" style="font-size:22px"></i>Telegram</div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;font-size:11px;color:var(--color-text-secondary);"><i class="ti ti-mail" aria-hidden="true" style="font-size:22px"></i>Email</div>
+    </div>
+    <div style="text-align:right;margin-top:12px;"><button class="btn-cancel" onclick="closeModal('modal-share')">Cerrar</button></div>
+  </div>
+</div>
+
+<script>
+const EMOJIS=['📋','🛒','✅','📚','🎯','💡','🏠','🎉','🏋️','🌿','💼','🍕'];
+const FIELD_TYPES=[
+  {id:'status',  label:'Estado',       icon:'ti-circle-dot'},
+  {id:'date',    label:'Fecha',         icon:'ti-calendar'},
+  {id:'rating',  label:'Calificación',  icon:'ti-star'},
+  {id:'priority',label:'Prioridad',     icon:'ti-flag'},
+  {id:'assignee',label:'Responsable',   icon:'ti-user'},
+  {id:'url',     label:'Enlace',        icon:'ti-link'},
+];
+
+let selEmoji='📋', selFieldsSet=new Set();
+let nid=20,sid=30,iid=100;
+let currentListId=null, currentItemId=null;
+let filtersOpen=false, showDone=true;
+let activeFilters={}; // {fieldId: Set of values}
+let pendingFields=null; // for manage fields modal
+
+let lists=[
+  {id:1,name:'Proyecto trabajo',emoji:'💼',fields:['status','date','priority'],sections:[
+    {id:1,name:'Esta semana',open:true,items:[
+      {id:1,text:'Reunión de equipo',done:true,desc:'Revisar avances Q2',fields:{status:'done',date:'2026-05-10',priority:'alta'}},
+      {id:2,text:'Revisar propuesta',done:false,desc:'',fields:{status:'doing',date:'2026-05-12',priority:'media'}},
+    ]},
+    {id:2,name:'Pendientes',open:true,items:[
+      {id:3,text:'Mandar informe',done:false,desc:'Incluir gráficos',fields:{status:'todo',date:'',priority:'alta'}},
+      {id:4,text:'Actualizar tablero',done:false,desc:'',fields:{status:'todo',date:'2026-05-15',priority:'baja'}},
+    ]},
+  ]},
+  {id:2,name:'Libros para leer',emoji:'📚',fields:['rating','status'],sections:[
+    {id:3,name:'Ficción',open:true,items:[
+      {id:5,text:'Rayuela',done:false,desc:'Recomendado por Laura',fields:{rating:4,status:'todo'}},
+      {id:6,text:'El aleph',done:true,desc:'',fields:{rating:5,status:'done'}},
+    ]},
+  ]},
+];
+
+function getList(id){return lists.find(l=>l.id===id);}
+function findItem(listId,itemId){const list=getList(listId);for(const sec of list.sections){const item=sec.items.find(i=>i.id===itemId);if(item)return{sec,item};}return null;}
+function countAll(list){const all=list.sections.flatMap(s=>s.items);return{total:all.length,done:all.filter(i=>i.done).length};}
+
+function itemPassesFilters(item){
+  for(const[fid,vals]of Object.entries(activeFilters)){
+    if(vals.size===0)continue;
+    const v=String(item.fields[fid]||'');
+    if(!vals.has(v))return false;
+  }
+  return true;
+}
+
+/* ---- HOME ---- */
+function renderHome(q=''){
+  const filtered=lists.filter(l=>l.name.toLowerCase().includes(q.toLowerCase()));
+  const tot=lists.reduce((a,l)=>a+countAll(l).total,0);
+  document.getElementById('home-sub').textContent=`${lists.length} lista${lists.length!==1?'s':''} · ${tot} ítems`;
+  document.getElementById('lists-grid').innerHTML=filtered.map(l=>{
+    const{total,done}=countAll(l);
+    const flds=l.fields.map(f=>FIELD_TYPES.find(t=>t.id===f)?.label||f).join(', ');
+    return`<div class="list-card" onclick="openList(${l.id})">
+      <div class="list-emoji">${l.emoji}</div>
+      <div class="list-info"><div class="list-name">${l.name}</div><div class="list-meta">${done}/${total} ítems${flds?' · '+flds:''}</div></div>
+      <i class="ti ti-chevron-right" aria-hidden="true" style="color:var(--color-text-tertiary);font-size:16px;"></i>
+    </div>`;
+  }).join('')||'<p style="text-align:center;padding:2rem;font-size:14px;color:var(--color-text-secondary);">No se encontraron listas</p>';
+}
+
+/* ---- DETAIL ---- */
+function openList(id){
+  currentListId=id; activeFilters={}; showDone=true; filtersOpen=false;
+  showScreen('screen-detail'); renderDetail();
+}
+
+function renderDetail(){
+  const list=getList(currentListId);
+  document.getElementById('detail-title').textContent=list.emoji+' '+list.name;
+  const allItems=list.sections.flatMap(s=>s.items);
+  const total=allItems.length, done=allItems.filter(i=>i.done).length;
+  const pct=total?Math.round((done/total)*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-label').textContent=`${done} de ${total} completado${done!==1?'s':''}`;
+  renderFiltersPanel(list);
+  renderActivePills(list);
+  renderSections(list);
+}
+
+function renderSections(list){
+  let anyVisible=false;
+  document.getElementById('sections-wrap').innerHTML=list.sections.map(sec=>{
+    const visibleItems=sec.items.filter(item=>{
+      if(!showDone&&item.done)return false;
+      return itemPassesFilters(item);
+    });
+    if(visibleItems.length>0)anyVisible=true;
+    return`<div class="section-block">
+      <div class="section-hdr" onclick="toggleSec(${sec.id})">
+        <i class="ti ti-chevron-right sec-toggle ${sec.open?'open':''}" aria-hidden="true"></i>
+        <span class="sec-name">${sec.name}</span>
+        <span class="sec-count">${sec.items.filter(i=>i.done).length}/${sec.items.length}</span>
+        <button class="btn-sm" onclick="event.stopPropagation();deleteSec(${sec.id})" aria-label="Eliminar sección"><i class="ti ti-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="sec-items ${sec.open?'open':''}">
+        ${visibleItems.length?visibleItems.map(item=>renderItemRow(list,item)).join(''):'<p class="empty-filter">Sin ítems visibles</p>'}
+        <div class="add-item-row">
+          <input class="add-item-input" type="text" placeholder="Nuevo ítem..." id="inp-${sec.id}" onkeydown="if(event.key==='Enter')addItem(${sec.id})" />
+          <button class="btn-add-sm" onclick="addItem(${sec.id})">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderItemRow(list,item){
+  const chips=list.fields.map(f=>{
+    const v=item.fields[f];
+    if(f==='status'&&v){const m={todo:'Por hacer',doing:'En progreso',done:'Completado'};return`<span class="chip status-${v}">${m[v]||v}</span>`;}
+    if(f==='date'&&v)return`<span class="chip"><i class="ti ti-calendar" aria-hidden="true" style="font-size:11px;"></i> ${v}</span>`;
+    if(f==='rating'&&v)return`<span class="chip">${'★'.repeat(v)}${'☆'.repeat(5-v)}</span>`;
+    if(f==='priority'&&v)return`<span class="chip">${v==='alta'?'🔴':v==='media'?'🟡':'🟢'} ${v}</span>`;
+    if(f==='assignee'&&v)return`<span class="chip"><i class="ti ti-user" aria-hidden="true" style="font-size:11px;"></i> ${v}</span>`;
+    if(f==='url'&&v)return`<span class="chip"><i class="ti ti-link" aria-hidden="true" style="font-size:11px;"></i> enlace</span>`;
+    return'';
+  }).filter(Boolean).join('');
+  const hasDesc=item.desc&&item.desc.trim();
+  return`<div class="item-row" onclick="openItemDetail(${item.id})">
+    <button class="item-check ${item.done?'done':''}" onclick="event.stopPropagation();toggleCheck(${item.id})" aria-label="Marcar"><i class="ti ti-check" aria-hidden="true"></i></button>
+    <div class="item-body">
+      <div class="item-title ${item.done?'done':''}">${item.text}${hasDesc?` <i class="ti ti-align-left" aria-hidden="true" style="font-size:11px;color:var(--color-text-tertiary);margin-left:3px;"></i>`:''}</div>
+      ${chips?`<div class="item-chips">${chips}</div>`:''}
+    </div>
+    <i class="ti ti-chevron-right" aria-hidden="true" style="font-size:14px;color:var(--color-text-tertiary);flex-shrink:0;"></i>
+  </div>`;
+}
+
+/* ---- FILTROS ---- */
+function toggleFilters(){
+  filtersOpen=!filtersOpen;
+  document.getElementById('filters-panel').classList.toggle('open',filtersOpen);
+  document.getElementById('btn-filters').classList.toggle('active',filtersOpen);
+  document.getElementById('filter-chev').style.transform=filtersOpen?'rotate(180deg)':'';
+}
+
+function renderFiltersPanel(list){
+  const panel=document.getElementById('filters-panel');
+  if(!list.fields.length){panel.innerHTML='<p style="font-size:13px;color:var(--color-text-secondary);">Esta lista no tiene campos para filtrar.</p>';return;}
+  panel.innerHTML=list.fields.map(f=>{
+    const ft=FIELD_TYPES.find(t=>t.id===f);
+    if(!ft)return'';
+    const opts=getFilterOptions(list,f);
+    if(!opts.length)return'';
+    const cur=activeFilters[f]||new Set();
+    return`<div class="filter-group">
+      <div class="filter-group-label"><i class="ti ${ft.icon}" aria-hidden="true" style="font-size:14px;"></i>${ft.label}</div>
+      <div class="filter-opts">${opts.map(o=>`<span class="filter-opt ${cur.has(o.value)?'sel':''}" onclick="toggleFilterOpt('${f}','${o.value}',this)">${o.label}</span>`).join('')}</div>
+    </div>`;
+  }).join('')+`<button class="filter-clear" onclick="clearAllFilters()">Limpiar filtros</button>`;
+}
+
+function getFilterOptions(list,field){
+  const vals=new Set();
+  list.sections.flatMap(s=>s.items).forEach(item=>{
+    const v=item.fields[field];
+    if(v!==undefined&&v!==null&&v!=='')vals.add(String(v));
+  });
+  if(field==='status') return[{value:'todo',label:'Por hacer'},{value:'doing',label:'En progreso'},{value:'done',label:'Completado'}].filter(o=>vals.has(o.value));
+  if(field==='priority') return[{value:'alta',label:'🔴 Alta'},{value:'media',label:'🟡 Media'},{value:'baja',label:'🟢 Baja'}].filter(o=>vals.has(o.value));
+  if(field==='rating') return[1,2,3,4,5].filter(n=>vals.has(String(n))).map(n=>({value:String(n),label:'★'.repeat(n)}));
+  return[...vals].map(v=>({value:v,label:v}));
+}
+
+function toggleFilterOpt(fieldId,value,el){
+  if(!activeFilters[fieldId])activeFilters[fieldId]=new Set();
+  if(activeFilters[fieldId].has(value)){activeFilters[fieldId].delete(value);el.classList.remove('sel');}
+  else{activeFilters[fieldId].add(value);el.classList.add('sel');}
+  if(activeFilters[fieldId].size===0)delete activeFilters[fieldId];
+  renderActivePills(getList(currentListId));
+  renderSections(getList(currentListId));
+  document.getElementById('btn-filters').classList.toggle('active',filtersOpen||hasActiveFilters());
+}
+
+function hasActiveFilters(){return Object.values(activeFilters).some(s=>s.size>0);}
+
+function renderActivePills(list){
+  const pills=[];
+  for(const[fid,vals]of Object.entries(activeFilters)){
+    const ft=FIELD_TYPES.find(t=>t.id===fid);
+    vals.forEach(v=>{
+      const opts=getFilterOptions(list,fid);
+      const label=opts.find(o=>o.value===v)?.label||v;
+      pills.push(`<span class="filter-pill">${ft?.label}: ${label}<button onclick="removeFilterPill('${fid}','${v}')" aria-label="Quitar filtro"><i class="ti ti-x" aria-hidden="true" style="font-size:13px;"></i></button></span>`);
+    });
+  }
+  document.getElementById('active-pills').innerHTML=pills.join('');
+}
+
+function removeFilterPill(fieldId,value){
+  if(activeFilters[fieldId]){activeFilters[fieldId].delete(value);if(activeFilters[fieldId].size===0)delete activeFilters[fieldId];}
+  const list=getList(currentListId);
+  renderFiltersPanel(list); renderActivePills(list); renderSections(list);
+}
+
+function clearAllFilters(){activeFilters={};const list=getList(currentListId);renderFiltersPanel(list);renderActivePills(list);renderSections(list);}
+
+function toggleShowDone(){
+  showDone=!showDone;
+  document.getElementById('show-done-label').textContent=showDone?'Ocultar completados':'Mostrar completados';
+  document.getElementById('btn-show-done').classList.toggle('active',!showDone);
+  renderSections(getList(currentListId));
+}
+
+/* ---- GESTIONAR CAMPOS ---- */
+function openManageFields(){
+  const list=getList(currentListId);
+  pendingFields=new Set(list.fields);
+  document.getElementById('manage-fields-list').innerHTML=FIELD_TYPES.map(ft=>{
+    const active=pendingFields.has(ft.id);
+    const uid='mf-'+ft.id;
+    return`<div class="mf-row">
+      <i class="ti ${ft.icon} mf-icon" aria-hidden="true"></i>
+      <span class="mf-label">${ft.label}</span>
+      <label class="toggle-wrap" title="${active?'Desactivar':'Activar'}">
+        <input type="checkbox" class="toggle-input" id="${uid}" ${active?'checked':''} onchange="pendingFields.has('${ft.id}')?pendingFields.delete('${ft.id}'):pendingFields.add('${ft.id}')" />
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </div>`;
+  }).join('');
+  openModal('modal-fields');
+}
+
+function applyFieldChanges(){
+  const list=getList(currentListId);
+  const newFields=[...pendingFields];
+  // add default values for new fields
+  const added=newFields.filter(f=>!list.fields.includes(f));
+  const removed=list.fields.filter(f=>!newFields.includes(f));
+  list.sections.forEach(sec=>sec.items.forEach(item=>{
+    added.forEach(f=>{if(item.fields[f]===undefined)item.fields[f]=f==='rating'?0:'';});
+    removed.forEach(f=>delete item.fields[f]);
+  }));
+  list.fields=newFields;
+  closeModal('modal-fields');
+  // if we're coming from item detail, re-render it
+  if(document.getElementById('screen-item').classList.contains('active')&&currentItemId){
+    const{item}=findItem(currentListId,currentItemId);
+    renderItemFields(list,item);
+  } else {
+    renderDetail();
+  }
+}
+
+/* ---- ÍTEM DETAIL ---- */
+function openItemDetail(itemId){
+  currentItemId=itemId;
+  const list=getList(currentListId);
+  const{item}=findItem(currentListId,itemId);
+  document.getElementById('item-name-inp').value=item.text;
+  document.getElementById('item-desc').value=item.desc||'';
+  renderItemFields(list,item);
+  showScreen('screen-item');
+}
+
+function renderItemFields(list,item){
+  document.getElementById('item-fields').innerHTML=list.fields.map(f=>{
+    const ft=FIELD_TYPES.find(t=>t.id===f);
+    const label=`<div class="field-label"><i class="ti ${ft?.icon||'ti-circle'}" aria-hidden="true"></i>${ft?.label||f}</div>`;
+    let ctrl='';
+    if(f==='status'){
+      const v=item.fields.status||'';
+      ctrl=`<select class="status-sel" onchange="saveField('status',this.value)">
+        <option value="" ${!v?'selected':''}>Sin estado</option>
+        <option value="todo" ${v==='todo'?'selected':''}>Por hacer</option>
+        <option value="doing" ${v==='doing'?'selected':''}>En progreso</option>
+        <option value="done" ${v==='done'?'selected':''}>Completado</option>
+      </select>`;
+    } else if(f==='date'){
+      ctrl=`<input class="field-input" type="date" value="${item.fields.date||''}" onchange="saveField('date',this.value)" />`;
+    } else if(f==='rating'){
+      const r=item.fields.rating||0;
+      ctrl=`<div class="stars">${[1,2,3,4,5].map(n=>`<span class="star ${n<=r?'active':''}" onclick="saveField('rating',${n})">${n<=r?'★':'☆'}</span>`).join('')}</div>`;
+    } else if(f==='priority'){
+      const v=item.fields.priority||'';
+      ctrl=`<select class="status-sel" onchange="saveField('priority',this.value)">
+        <option value="" ${!v?'selected':''}>Sin prioridad</option>
+        <option value="alta" ${v==='alta'?'selected':''}>🔴 Alta</option>
+        <option value="media" ${v==='media'?'selected':''}>🟡 Media</option>
+        <option value="baja" ${v==='baja'?'selected':''}>🟢 Baja</option>
+      </select>`;
+    } else if(f==='assignee'){
+      ctrl=`<input class="field-input" type="text" placeholder="Nombre..." value="${item.fields.assignee||''}" onchange="saveField('assignee',this.value)" />`;
+    } else if(f==='url'){
+      ctrl=`<input class="field-input" type="url" placeholder="https://..." value="${item.fields.url||''}" onchange="saveField('url',this.value)" />`;
+    }
+    return`<div class="field-row">${label}<div class="field-value">${ctrl}</div></div>`;
+  }).join('')||(list.fields.length===0?'<p style="font-size:13px;color:var(--color-text-secondary);padding:4px 0;">Esta lista no tiene campos configurados. <button class="btn-edit-fields" onclick="openManageFields()" style="font-size:13px;display:inline-flex;">Agregar campos</button></p>':'');
+}
+
+function saveField(field,value){
+  const list=getList(currentListId);
+  const{item}=findItem(currentListId,currentItemId);
+  item.fields[field]=field==='rating'?Number(value):value;
+  renderItemFields(list,item);
+}
+function saveItemName(){const{item}=findItem(currentListId,currentItemId);const v=document.getElementById('item-name-inp').value.trim();if(v)item.text=v;}
+function saveDesc(){const{item}=findItem(currentListId,currentItemId);item.desc=document.getElementById('item-desc').value;}
+function deleteCurrentItem(){const list=getList(currentListId);list.sections.forEach(sec=>{sec.items=sec.items.filter(i=>i.id!==currentItemId);});closeItem();}
+function closeItem(){showScreen('screen-detail');renderDetail();}
+
+/* ---- SECCIONES ---- */
+function toggleSec(secId){const list=getList(currentListId);const sec=list.sections.find(s=>s.id===secId);sec.open=!sec.open;renderDetail();}
+function deleteSec(secId){const list=getList(currentListId);list.sections=list.sections.filter(s=>s.id!==secId);renderDetail();}
+function addItem(secId){
+  const inp=document.getElementById('inp-'+secId);const text=inp.value.trim();if(!text)return;
+  const list=getList(currentListId);const sec=list.sections.find(s=>s.id===secId);
+  const defs={};list.fields.forEach(f=>{defs[f]=f==='rating'?0:'';});
+  sec.items.push({id:iid++,text,done:false,desc:'',fields:{...defs}});
+  inp.value='';renderDetail();setTimeout(()=>{const e=document.getElementById('inp-'+secId);if(e)e.focus();},50);
+}
+function toggleCheck(itemId){const{item}=findItem(currentListId,itemId);item.done=!item.done;renderDetail();}
+function deleteList(){if(!confirm('¿Eliminar esta lista?'))return;lists=lists.filter(l=>l.id!==currentListId);goHome();}
+function goHome(){showScreen('screen-home');renderHome();}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+/* ---- MODALES ---- */
+let selEmoji2='📋',selFieldsSet2=new Set();
+function openNewListModal(){
+  selEmoji2=EMOJIS[0];selFieldsSet2=new Set();
+  document.getElementById('nl-name').value='';
+  document.getElementById('nl-emojis').innerHTML=EMOJIS.map(e=>`<span class="emoji-opt ${e===selEmoji2?'selected':''}" onclick="pickEmoji2('${e}',this)">${e}</span>`).join('');
+  document.getElementById('field-types-grid').innerHTML=FIELD_TYPES.map(f=>`<div class="field-type-opt" onclick="toggleField2('${f.id}',this)"><i class="ti ${f.icon}" aria-hidden="true"></i>${f.label}</div>`).join('');
+  openModal('modal-list');setTimeout(()=>document.getElementById('nl-name').focus(),150);
+}
+function pickEmoji2(e,el){selEmoji2=e;document.querySelectorAll('.emoji-opt').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');}
+function toggleField2(id,el){if(selFieldsSet2.has(id)){selFieldsSet2.delete(id);el.classList.remove('selected');}else{selFieldsSet2.add(id);el.classList.add('selected');}}
+function confirmNewList(){
+  const name=document.getElementById('nl-name').value.trim();if(!name)return;
+  const fields=[...selFieldsSet2];const defs={};fields.forEach(f=>defs[f]=f==='rating'?0:'');
+  lists.push({id:nid++,name,emoji:selEmoji2,fields,sections:[{id:sid++,name:'General',open:true,items:[]}]});
+  closeModal('modal-list');openList(lists[lists.length-1].id);
+}
+function openNewSectionModal(){document.getElementById('ns-name').value='';openModal('modal-sec');setTimeout(()=>document.getElementById('ns-name').focus(),150);}
+function confirmNewSection(){const name=document.getElementById('ns-name').value.trim();if(!name)return;getList(currentListId).sections.push({id:sid++,name,open:true,items:[]});closeModal('modal-sec');renderDetail();}
+function openShare(){const list=getList(currentListId);document.getElementById('share-name').textContent=list.emoji+' '+list.name;document.getElementById('share-link').value=`https://listify.app/shared/${currentListId}`;document.getElementById('copied-msg').style.display='none';openModal('modal-share');}
+function copyShareLink(){navigator.clipboard.writeText(document.getElementById('share-link').value).catch(()=>{});document.getElementById('copied-msg').style.display='block';}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+renderHome();
+</script>
