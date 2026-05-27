@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Listify v6</title>
+<title>Listify</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#185FA5" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Listify" />
+<link rel="apple-touch-icon" href="imagen.png" />
 <link rel="icon" type="image/png" href="imagen.png" />
 <style>
 :root {
@@ -903,6 +911,11 @@ document.getElementById('btn-confirm-list').addEventListener('click',confirmNewL
 
 loadData();
 renderHome();
+
+// Register service worker for PWA offline support
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
 </script>
 </body>
 </html>
