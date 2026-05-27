@@ -2,7 +2,7 @@
   "name": "Listify",
   "short_name": "Listify",
   "description": "Tu app de listas personalizable",
-  "start_url": "./listify_v6.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#185FA5",
