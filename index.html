@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Listify</title>
-
+ 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#185FA5" />
@@ -34,7 +34,7 @@
 body{background:var(--color-bg);}
 .app{font-family:var(--font-sans);max-width:420px;margin:0 auto;min-height:100vh;}
 .screen{display:none;}.screen.active{display:block;}
-
+ 
 /* top bar */
 .top-bar{padding:.9rem 1rem;border-bottom:.5px solid var(--color-border);display:flex;align-items:center;gap:8px;}
 .top-bar-title{flex:1;font-size:17px;font-weight:500;color:var(--color-text-primary);}
@@ -42,7 +42,7 @@ body{background:var(--color-bg);}
 .btn-primary{background:#185FA5;color:white;border:none;border-radius:var(--radius-md);padding:7px 13px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;}
 .btn-icon{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:20px;display:flex;padding:4px;}
 .btn-icon.danger{color:#A32D2D;}
-
+ 
 /* home */
 .search-wrap{padding:.75rem 1rem;}
 .search-input{width:100%;background:var(--color-bg2);border:.5px solid var(--color-border);border-radius:var(--radius-md);padding:8px 12px;font-size:14px;color:var(--color-text-primary);}
@@ -54,7 +54,7 @@ body{background:var(--color-bg);}
 .list-info{flex:1;min-width:0;}
 .list-name{font-size:15px;font-weight:500;color:var(--color-text-primary);}
 .list-meta{font-size:12px;color:var(--color-text-secondary);margin-top:2px;}
-
+ 
 /* subbar */
 .detail-subbar{border-bottom:.5px solid var(--color-border);}
 .detail-subbar-row{display:flex;align-items:center;gap:8px;padding:.5rem 1rem;}
@@ -62,7 +62,7 @@ body{background:var(--color-bg);}
 .btn-subbar.active{background:#E6F1FB;border-color:#B5D4F4;color:#0C447C;}
 .show-details-label{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;user-select:none;margin-left:auto;}
 .show-details-label input{accent-color:#185FA5;width:14px;height:14px;cursor:pointer;}
-
+ 
 /* filter panel */
 .filters-panel{border-bottom:.5px solid var(--color-border);background:var(--color-bg2);padding:.75rem 1rem;display:none;}
 .filters-panel.open{display:block;}
@@ -73,22 +73,22 @@ body{background:var(--color-bg);}
 .filter-opt{padding:4px 12px;border-radius:20px;border:.5px solid var(--color-border2);font-size:12px;color:var(--color-text-secondary);cursor:pointer;background:var(--color-bg);}
 .filter-opt.sel{background:#185FA5;color:white;border-color:#185FA5;}
 .filter-clear{font-size:12px;color:#185FA5;background:none;border:none;cursor:pointer;margin-top:10px;display:block;}
-
+ 
 /* progress */
 .progress-wrap{padding:.5rem 1rem .3rem;}
 .progress-bar{height:4px;background:var(--color-bg2);border-radius:4px;overflow:hidden;}
 .progress-fill{height:4px;background:#1D9E75;border-radius:4px;transition:width .3s;}
 .progress-label{font-size:12px;color:var(--color-text-secondary);margin-top:3px;}
-
+ 
 /* sections */
 .sections-wrap{padding:.5rem 1rem;}
-
+ 
 /* unsectioned items block */
 .unsectioned-block{margin-bottom:.75rem;border:.5px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;}
 .unsectioned-hdr{display:flex;align-items:center;gap:6px;padding:.45rem .8rem;background:var(--color-bg2);}
 .unsectioned-label{flex:1;font-size:13px;font-weight:500;color:var(--color-text-secondary);}
 .unsectioned-count{font-size:12px;color:var(--color-text-secondary);}
-
+ 
 .section-block{margin-bottom:.75rem;border:.5px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;}
 .section-block.drag-over{border-color:#185FA5;background:#E6F1FB22;}
 .section-hdr{display:flex;align-items:center;gap:6px;padding:.55rem .8rem;background:var(--color-bg2);}
@@ -99,10 +99,10 @@ body{background:var(--color-bg);}
 .sec-count{font-size:12px;color:var(--color-text-secondary);margin-left:4px;}
 .btn-sec-icon{background:none;border:none;cursor:pointer;color:var(--color-text-tertiary);display:flex;padding:4px;opacity:.7;flex-shrink:0;}
 .btn-sec-icon:hover{opacity:1;color:var(--color-text-primary);}
-
+ 
 .sec-items{display:none;}
 .sec-items.open{display:block;}
-
+ 
 /* item rows */
 .item-row{display:flex;align-items:center;gap:10px;padding:9px .8rem;border-bottom:.5px solid var(--color-border);background:var(--color-bg);transition:background .1s;position:relative;}
 .item-row:last-of-type{border-bottom:none;}
@@ -126,7 +126,7 @@ body{background:var(--color-bg);}
 .chip.status-todo{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4;}
 .chip.status-doing{background:#FAEEDA;color:#633806;border-color:#FAC775;}
 .chip.status-done{background:#EAF3DE;color:#27500A;border-color:#C0DD97;}
-
+ 
 /* add item inline */
 .add-item-inline{padding:6px .8rem 8px;display:none;}
 .add-item-inline.open{display:flex;gap:6px;}
@@ -134,14 +134,14 @@ body{background:var(--color-bg);}
 .add-item-input::placeholder{color:var(--color-text-tertiary);}
 .btn-add-sm{background:#185FA5;color:white;border:none;border-radius:var(--radius-md);padding:6px 12px;font-size:13px;cursor:pointer;display:flex;align-items:center;}
 .btn-add-sm-cancel{background:none;border:.5px solid var(--color-border);border-radius:var(--radius-md);padding:6px 10px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);display:flex;align-items:center;}
-
+ 
 /* bottom buttons */
 .bottom-actions{padding:0 1rem .75rem;display:flex;gap:8px;}
 .btn-add-section{display:flex;align-items:center;gap:6px;background:none;border:.5px dashed var(--color-border2);border-radius:var(--radius-md);padding:8px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;flex:1;}
 .btn-add-section:hover{background:var(--color-bg2);}
 .btn-add-unsec{display:flex;align-items:center;gap:6px;background:none;border:.5px dashed var(--color-border2);border-radius:var(--radius-md);padding:8px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;flex:1;}
 .btn-add-unsec:hover{background:var(--color-bg2);}
-
+ 
 /* item detail */
 .item-detail-header{padding:.75rem 1rem;border-bottom:.5px solid var(--color-border);display:flex;align-items:center;gap:8px;}
 .item-name-input{flex:1;font-size:16px;font-weight:500;color:var(--color-text-primary);background:none;border:none;padding:0;border-bottom:1.5px solid transparent;}
@@ -163,14 +163,14 @@ body{background:var(--color-bg);}
 .desc-label{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
 .desc-textarea{width:100%;background:var(--color-bg2);border:.5px solid var(--color-border);border-radius:var(--radius-md);padding:8px 10px;font-size:13px;color:var(--color-text-primary);resize:none;min-height:80px;font-family:var(--font-sans);}
 .desc-textarea:focus{outline:none;border-color:#185FA5;}
-
+ 
 /* date segments */
 .date-input-wrap{display:flex;align-items:center;gap:4px;}
 .date-seg{width:36px;background:var(--color-bg2);border:.5px solid var(--color-border);border-radius:var(--radius-md);padding:5px 6px;font-size:13px;color:var(--color-text-primary);text-align:center;}
 .date-seg.year{width:52px;}
 .date-seg:focus{outline:none;border-color:#185FA5;}
 .date-sep{font-size:13px;color:var(--color-text-tertiary);user-select:none;}
-
+ 
 /* modals */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:flex-end;justify-content:center;z-index:100;}
 .modal-overlay.open{display:flex;}
@@ -203,7 +203,7 @@ body{background:var(--color-bg);}
 </head>
 <body>
 <div class="app">
-
+ 
 <!-- HOME -->
 <div class="screen active" id="screen-home">
   <div class="top-bar">
@@ -213,7 +213,7 @@ body{background:var(--color-bg);}
   <div class="search-wrap"><input class="search-input" type="text" placeholder="Buscar lista..." oninput="renderHome(this.value)" /></div>
   <div class="lists-grid" id="lists-grid"></div>
 </div>
-
+ 
 <!-- DETALLE LISTA -->
 <div class="screen" id="screen-detail">
   <div class="top-bar">
@@ -245,7 +245,7 @@ body{background:var(--color-bg);}
     <button class="btn-add-section" onclick="openNewSectionModal()">SVG_PLUS Sección</button>
   </div>
 </div>
-
+ 
 <!-- DETALLE ÍTEM -->
 <div class="screen" id="screen-item">
   <div class="item-detail-header">
@@ -263,9 +263,9 @@ body{background:var(--color-bg);}
   </div>
   <div id="desc-section-wrap"></div>
 </div>
-
+ 
 </div><!-- .app -->
-
+ 
 <!-- MODAL: nueva lista -->
 <div class="modal-overlay" id="modal-list">
   <div class="modal">
@@ -281,7 +281,7 @@ body{background:var(--color-bg);}
     </div>
   </div>
 </div>
-
+ 
 <!-- MODAL: gestionar campos -->
 <div class="modal-overlay" id="modal-fields" onclick="if(event.target===this)closeModal('modal-fields')">
   <div class="modal">
@@ -294,7 +294,7 @@ body{background:var(--color-bg);}
     </div>
   </div>
 </div>
-
+ 
 <!-- MODAL: nueva/editar sección -->
 <div class="modal-overlay" id="modal-sec" onclick="if(event.target===this)closeModal('modal-sec')">
   <div class="modal">
@@ -306,7 +306,7 @@ body{background:var(--color-bg);}
     </div>
   </div>
 </div>
-
+ 
 <!-- MODAL: compartir -->
 <div class="modal-overlay" id="modal-share" onclick="if(event.target===this)closeModal('modal-share')">
   <div class="modal">
@@ -325,7 +325,7 @@ body{background:var(--color-bg);}
     <div style="text-align:right;margin-top:12px;"><button class="btn-cancel" onclick="closeModal('modal-share')">Cerrar</button></div>
   </div>
 </div>
-
+ 
 <script>
 // ── SVG ICONS ───────────────────────────────────────────────────────────────
 const S = {
@@ -361,7 +361,7 @@ document.body.innerHTML = document.body.innerHTML
   .replace(/SVG_WA/g,   `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10c0 5 6 5 6 0"/></svg>`)
   .replace(/SVG_TG/g,   `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 10l-4 4 6 6 4-16-18 7 4 2 2 6 3-4"/></svg>`)
   .replace(/SVG_MAIL/g, `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>`);
-
+ 
 // ── DATA ────────────────────────────────────────────────────────────────────
 const EMOJIS = ['📋','🛒','✅','📚','🎯','💡','🏠','🎉','🏋️','🌿','💼','🍕'];
 const FIELD_TYPES = [
@@ -373,23 +373,23 @@ const FIELD_TYPES = [
   {id:'url',     label:'Enlace',        icon:'ti-link'},
   {id:'desc',    label:'Descripción',   icon:'ti-align'},
 ];
-
+ 
 let nid=1, sid=1, iid=1;
 let currentListId=null, currentItemId=null;
 let filtersOpen=false, showDetails=true;
 let activeFilters={}, pendingFields=null;
 let selEmoji='📋', selFieldsSet=new Set();
 let editingSectionId=null;
-
+ 
 // ── PERSISTENCE ─────────────────────────────────────────────────────────────
 const STORAGE_KEY = 'listify_v6_data';
-
+ 
 function saveData(){
   try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify({lists, nid, sid, iid}));
   }catch(e){ console.warn('Could not save:', e); }
 }
-
+ 
 function loadData(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -403,11 +403,11 @@ function loadData(){
     lists.forEach(l=>{ if(!l.unsectioned) l.unsectioned=[]; });
   }catch(e){ console.warn('Could not load:', e); }
 }
-
+ 
 // ── DATA ─────────────────────────────────────────────────────────────────────
 // Each list: { id, name, emoji, fields, sections:[], unsectioned:[] }
 let lists = [];
-
+ 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
 function getList(id){return lists.find(l=>l.id===id);}
 function getSec(list,id){return list.sections.find(s=>s.id===id);}
@@ -432,7 +432,7 @@ function itemPassesFilters(item){
   }
   return true;
 }
-
+ 
 // ── HOME ─────────────────────────────────────────────────────────────────────
 function renderHome(q=''){
   const filtered=lists.filter(l=>l.name.toLowerCase().includes(q.toLowerCase()));
@@ -453,7 +453,7 @@ function renderHome(q=''){
           <div style="font-size:14px;color:var(--color-text-secondary);margin-bottom:1.5rem;">Tocá "Nueva lista" para empezar</div>
         </div>`);
 }
-
+ 
 // ── DETAIL ───────────────────────────────────────────────────────────────────
 function openList(id){
   currentListId=id;activeFilters={};filtersOpen=false;showDetails=true;
@@ -471,11 +471,11 @@ function renderDetail(){
   // wire unsectioned add button
   document.getElementById('btn-add-unsec').onclick=()=>addItemTo(null);
 }
-
+ 
 function renderSections(list){
   const wrap=document.getElementById('sections-wrap');
   let html='';
-
+ 
   // unsectioned block (always shown if items exist or no sections exist)
   const visU=list.unsectioned.filter(i=>itemPassesFilters(i));
   if(list.unsectioned.length>0||list.sections.length===0){
@@ -489,7 +489,7 @@ function renderSections(list){
       ${visU.map(item=>renderItemRow(list,item,'null')).join('')}
     </div>`;
   }
-
+ 
   // sectioned blocks
   html+=list.sections.map(sec=>{
     const visI=sec.items.filter(i=>itemPassesFilters(i));
@@ -515,10 +515,10 @@ function renderSections(list){
       </div>
     </div>`;
   }).join('');
-
+ 
   wrap.innerHTML=html;
 }
-
+ 
 function renderItemRow(list,item,secId){
   const chips=showDetails?list.fields.map(f=>{
     const v=item.fields[f];
@@ -540,7 +540,7 @@ function renderItemRow(list,item,secId){
     ${S.chevR}
   </div>`;
 }
-
+ 
 // ── DRAG & DROP (pointer events — works on mobile + desktop) ─────────────────
 let dnd = {
   active: false, itemId: null, fromSecId: null,
@@ -548,20 +548,20 @@ let dnd = {
   overItemId: null, overItemPos: null, // 'above'|'below'
   overSecId: null,
 };
-
+ 
 function getSecItems(list,secId){return secId===null?list.unsectioned:getSec(list,secId)?.items||[];}
 function removeFromSec(list,secId,itemId){
   if(secId===null)list.unsectioned=list.unsectioned.filter(i=>i.id!==itemId);
   else{const s=getSec(list,secId);s.items=s.items.filter(i=>i.id!==itemId);}
 }
-
+ 
 function dragStart(e,itemId,secIdRaw){
   e.preventDefault();
   const secId = secIdRaw==='null'?null:Number(secIdRaw);
   const{item}=findItem(currentListId,itemId);
   dnd.active=true; dnd.itemId=itemId; dnd.fromSecId=secId;
   dnd.startX=e.clientX; dnd.startY=e.clientY;
-
+ 
   // create floating preview
   const preview=document.createElement('div');
   preview.id='drag-preview';
@@ -569,37 +569,37 @@ function dragStart(e,itemId,secIdRaw){
   document.body.appendChild(preview);
   dnd.preview=preview;
   movePrev(e.clientX,e.clientY);
-
+ 
   // ghost source
   document.getElementById('item-'+itemId)?.classList.add('drag-ghost');
-
+ 
   document.addEventListener('pointermove', dragMove, {passive:false});
   document.addEventListener('pointerup', dragEnd);
   document.addEventListener('pointercancel', dragEnd);
 }
-
+ 
 function movePrev(x,y){
   if(!dnd.preview)return;
   dnd.preview.style.left=(x+14)+'px';
   dnd.preview.style.top=(y-18)+'px';
 }
-
+ 
 function dragMove(e){
   if(!dnd.active)return;
   e.preventDefault();
   movePrev(e.clientX,e.clientY);
-
+ 
   // clear previous indicators
   document.querySelectorAll('.drop-above,.drop-below').forEach(el=>{el.classList.remove('drop-above','drop-below');});
   document.querySelectorAll('.drop-target-sec').forEach(el=>el.classList.remove('drop-target-sec'));
   dnd.overItemId=null; dnd.overSecId=null;
-
+ 
   // find element under pointer (skip preview)
   dnd.preview.style.display='none';
   const el=document.elementFromPoint(e.clientX,e.clientY);
   dnd.preview.style.display='';
   if(!el)return;
-
+ 
   // check if over an item row
   const row=el.closest('.item-row');
   if(row){
@@ -612,7 +612,7 @@ function dragMove(e){
     }
     return;
   }
-
+ 
   // check if over a section block (to move to that section)
   const secBlock=el.closest('[data-sec-drop]');
   if(secBlock){
@@ -624,21 +624,21 @@ function dragMove(e){
     }
   }
 }
-
+ 
 function dragEnd(e){
   if(!dnd.active)return;
   document.removeEventListener('pointermove',dragMove);
   document.removeEventListener('pointerup',dragEnd);
   document.removeEventListener('pointercancel',dragEnd);
-
+ 
   // remove visuals
   document.querySelectorAll('.drag-ghost,.drop-above,.drop-below,.drop-target-sec')
     .forEach(el=>el.classList.remove('drag-ghost','drop-above','drop-below','drop-target-sec'));
   dnd.preview?.remove(); dnd.preview=null;
-
+ 
   const list=getList(currentListId);
   const{item}=findItem(currentListId,dnd.itemId);
-
+ 
   if(dnd.overItemId!==null){
     // drop relative to another item
     removeFromSec(list,dnd.fromSecId,dnd.itemId);
@@ -657,12 +657,12 @@ function dragEnd(e){
     getSecItems(list,dnd.overSecId).push(item);
   }
   // else: no valid drop target, no change
-
+ 
   dnd.active=false; dnd.itemId=null; dnd.fromSecId=null; dnd.overItemId=null; dnd.overSecId=null;
   saveData();
   renderSections(list);
 }
-
+ 
 // ── SECTION OPS ──────────────────────────────────────────────────────────────
 function toggleSec(secId){const list=getList(currentListId);const sec=getSec(list,secId);sec.open=!sec.open;renderSections(list);}
 function toggleAddItem(secId){
@@ -689,7 +689,7 @@ function addItemTo(secId){ // secId===null => unsectioned
 }
 function toggleCheck(itemId){const{item}=findItem(currentListId,itemId);item.done=!item.done;saveData();renderSections(getList(currentListId));}
 function toggleShowDetails(){showDetails=document.getElementById('chk-show-details').checked;renderSections(getList(currentListId));}
-
+ 
 // ── FILTERS ───────────────────────────────────────────────────────────────────
 function toggleFilters(){
   filtersOpen=!filtersOpen;
@@ -732,7 +732,7 @@ function clearAllFilters(){
   document.getElementById('btn-filters').classList.toggle('active',filtersOpen);
   renderFiltersPanel(getList(currentListId));renderSections(getList(currentListId));
 }
-
+ 
 // ── MANAGE FIELDS ─────────────────────────────────────────────────────────────
 function openManageFields(){
   const list=getList(currentListId);
@@ -766,7 +766,7 @@ function applyFieldChanges(){
     const{item}=findItem(currentListId,currentItemId);renderItemFields(list,item);
   } else renderDetail();
 }
-
+ 
 // ── SECTIONS MODAL ───────────────────────────────────────────────────────────
 function openNewSectionModal(){
   editingSectionId=null;
@@ -789,7 +789,7 @@ function confirmSectionModal(){
   else list.sections.push({id:sid++,name,open:true,addOpen:false,items:[]});
   saveData();closeModal('modal-sec');renderDetail();
 }
-
+ 
 // ── ITEM DETAIL ───────────────────────────────────────────────────────────────
 function openItemDetail(itemId){
   currentItemId=itemId;
@@ -862,7 +862,7 @@ function deleteCurrentItem(){
   closeItem();
 }
 function closeItem(){showScreen('screen-detail');renderDetail();}
-
+ 
 // ── DATE SEGMENTS ─────────────────────────────────────────────────────────────
 function dateSegInput(el,nextId,maxLen){
   el.value=el.value.replace(/\D/g,'');
@@ -873,12 +873,12 @@ function dateSegKey(e,prevId,nextId){
   if(e.key==='ArrowRight'&&nextId&&e.target.selectionStart===e.target.value.length){e.preventDefault();const n=document.getElementById(nextId);if(n){n.focus();n.select();}}
   if(e.key==='ArrowLeft'&&prevId&&e.target.selectionStart===0){e.preventDefault();const p=document.getElementById(prevId);if(p){p.focus();p.setSelectionRange(p.value.length,p.value.length);}}
 }
-
+ 
 // ── MISC ──────────────────────────────────────────────────────────────────────
 function deleteList(){if(!confirm('¿Eliminar esta lista?'))return;lists=lists.filter(l=>l.id!==currentListId);saveData();goHome();}
 function goHome(){showScreen('screen-home');renderHome();}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-
+ 
 function openNewListModal(){
   selEmoji=EMOJIS[0];selFieldsSet=new Set();
   document.getElementById('nl-name').value='';
@@ -894,7 +894,7 @@ function confirmNewList(){
   const newList={id:nid++,name,emoji:selEmoji,fields,sections:[],unsectioned:[]};
   lists.push(newList);saveData();closeModal('modal-list');openList(newList.id);
 }
-
+ 
 function openShare(){
   const list=getList(currentListId);
   document.getElementById('share-name').textContent=list.emoji+' '+list.name;
@@ -905,13 +905,13 @@ function openShare(){
 function copyShareLink(){navigator.clipboard.writeText(document.getElementById('share-link').value).catch(()=>{});document.getElementById('copied-msg').style.display='block';}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-
+ 
 document.getElementById('btn-nueva-lista').addEventListener('click',openNewListModal);
 document.getElementById('btn-confirm-list').addEventListener('click',confirmNewList);
-
+ 
 loadData();
 renderHome();
-
+ 
 // Register service worker for PWA offline support
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
