@@ -10,16 +10,16 @@
   "lang": "es",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/nachitosa/list-/main/imagen.png",
+      "src": "imagen.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://raw.githubusercontent.com/nachitosa/list-/main/imagen.png",
+      "src": "imagen.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }
