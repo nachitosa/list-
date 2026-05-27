@@ -2,7 +2,7 @@ const CACHE = 'listify-v1';
 const ASSETS = [
   './index.html',
   './manifest.json',
-  './imagen.jpg',
+  './imagen.png',
 ];
 
 // Instalar: cachear los archivos clave
