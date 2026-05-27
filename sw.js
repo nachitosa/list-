@@ -1,6 +1,6 @@
 const CACHE = 'listify-v1';
 const ASSETS = [
-  './listify_v6.html',
+  './index.html',
   './manifest.json',
   './imagen.png',
 ];
